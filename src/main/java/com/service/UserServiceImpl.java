@@ -1,0 +1,53 @@
+package com.service;
+
+import com.dao.UserDao;
+import com.entity.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+
+@Service
+public class UserServiceImpl implements UserService{
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+    @Autowired
+    private UserDao userDao;
+    @Override
+    public String create(User u) {
+        //jdbcTemplate.update("insert into user(username, password) values(?, ?)", username, password);
+        if (userDao.save(u)!=null){
+            return "login";
+        }else {
+            return "error";
+        }
+    }
+
+    @Override
+    public void deleteByName(String username) {
+        jdbcTemplate.update("delete from user where username = ?", username);
+    }
+
+    @Override
+    public Integer getAllUsers() {
+        return jdbcTemplate.queryForObject("select count(1) from user",Integer.class);
+    }
+    @Override
+    public void createName(String name){
+        jdbcTemplate.execute("CREATE TABLE "+name+"(name varchar(30), id int, PRIMARY KEY(id))ENGINE=innodb DEFAULT CHARSET=utf8");
+        //jdbcTemplate.update("alter table xxx rename to ?",name);
+    }
+
+    @Override
+    public User findByName(String name) {
+        return null;
+    }
+
+    @Override
+    public User findByNameAndPassword(String name, String password) {
+        return userDao.findByNameAndPassword(name,password);
+    }
+
+
+}
