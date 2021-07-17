@@ -1,6 +1,8 @@
 package com.test;
 
 import com.Application;
+import com.dao.UserDao;
+import com.entity.User;
 import com.service.UserService;
 import org.junit.Assert;
 import org.junit.Test;
@@ -15,8 +17,15 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class ApplicationTest {
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserDao userDao;
     @Test
     public void test() throws Exception {
+    /*    userDao.save(new User("AAA", "10"));
+        userDao.save(new User("BBB", "20"));
+        userDao.save(new User("CCC", "30"));*/
+        //userService.create("aa","111");
+        //Assert.assertEquals(3, userDao.findAll().size());
         // 插入5个用户
       /*  userService.create("a", "111");
         userService.create("b", "222");

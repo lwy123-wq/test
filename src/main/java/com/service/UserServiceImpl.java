@@ -9,12 +9,16 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 
 @Service
-public class UserServiceImpl implements UserService{
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+public class UserServiceImpl{
     @Autowired
     private UserDao userDao;
-    @Override
+    public int insertUser(String username,String password){
+        return userDao.create(username,password);
+    }
+    public User findByName(String name){
+        return userDao.findByName(name);
+    }
+  /*  @Override
     public String create(User u) {
         //jdbcTemplate.update("insert into user(username, password) values(?, ?)", username, password);
         if (userDao.save(u)!=null){
@@ -47,7 +51,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public User findByNameAndPassword(String name, String password) {
         return userDao.findByNameAndPassword(name,password);
-    }
+    }*/
 
 
 }
