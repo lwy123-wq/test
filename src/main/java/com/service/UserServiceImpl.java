@@ -18,6 +18,9 @@ public class UserServiceImpl{
     public User findByName(String name){
         return userDao.findByName(name);
     }
+    public User findByNameAndPassword(String username,String password){
+        return userDao.findByNameAndPassword(username,password);
+    }
   /*  @Override
     public String create(User u) {
         //jdbcTemplate.update("insert into user(username, password) values(?, ?)", username, password);

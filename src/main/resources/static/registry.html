@@ -3,19 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>注册</title>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.js"></script>
+    <script type="text/javascript" src="/js/jquery.js"></script>
     <script>
         $(function () {
             $("#submit").on('click', function () {
                 $.ajax({
-                    url: "/registry",
+                    url: "/registrys",
                     type: 'POST',
                     data: {'username': $("#username").val(), 'password': $("#password").val()},
                     success: function (res) {
-                        alert("注册成功");
+                       if(res == "Y"){
+                           alert("success")
+                       }else{
+                           alert("error")
+                       }
                     },
                     error: function (res) {
-                        alert("注册失败")
+                        alert("error!!!!!")
                     }
                 });
             })

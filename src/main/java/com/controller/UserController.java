@@ -2,13 +2,10 @@ package com.controller;
 
 import com.entity.User;
 import com.service.UserServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
 @RestController
 public class UserController {
     @Autowired
@@ -36,21 +33,39 @@ public class UserController {
     public ModelAndView index(){
         return new ModelAndView("/index.html");
     }
-    @RequestMapping(value = "/login",method = RequestMethod.POST)
-    @ResponseBody
-    public ModelAndView login(String username,String password){
 
-        User user=new User(username,password);
-        System.out.println(user.getUsername());
+    @RequestMapping(value = "/login")
+    public ModelAndView login(){
         return new ModelAndView("/login.html");
     }
-    @RequestMapping(value = "/registry",method =RequestMethod.POST)
-    public ModelAndView register(String username,String password){
-        if(userService.findByName(username)==null){
-            userService.insertUser(username,password);
-            return new ModelAndView("/login.html");
+    @PostMapping(value = "/loginn")
+    @ResponseBody
+    public String login(String username,String password){
+        System.out.println(username);
+        User user=userService.findByNameAndPassword(username,password);
+
+        if(user.getUsername()==null||user.getPassword()==null){
+            return "error";
+        }else {
+            return "success";
         }
-        return new ModelAndView("error.html");
+    }
+    @RequestMapping(value = "/registry")
+//    @ResponseBody
+   public ModelAndView register(){
+        return new ModelAndView("/registry.html");
+    }
+    @PostMapping(value = "/registrys")
+    @ResponseBody
+    public String  register(String username,String password){
+        System.out.println("duan dian 1");
+        User user =userService.findByName(username);
+        System.out.println(user);
+        if(user.getUsername() == null){
+            userService.insertUser(username,password);
+            return "Y";
+        }
+        return "N";
     }
     //去注册页面
   /*  @GetMapping("/register")

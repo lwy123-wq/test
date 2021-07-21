@@ -1,13 +1,14 @@
+com/entity/User.java
+ com.entity.User
+com/Application.java
+ com.Application
 com/dao/UserDao.java
  com.dao.UserDao
  com.dao.UserDao$1
-com/Application.java
- com.Application
+ com.dao.UserDao$2
 com/service/UserService.java
  com.service.UserService
 com/service/UserServiceImpl.java
  com.service.UserServiceImpl
-com/entity/User.java
- com.entity.User
 com/controller/UserController.java
  com.controller.UserController

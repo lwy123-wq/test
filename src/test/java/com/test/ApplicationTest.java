@@ -24,7 +24,8 @@ public class ApplicationTest {
     /*    userDao.save(new User("AAA", "10"));
         userDao.save(new User("BBB", "20"));
         userDao.save(new User("CCC", "30"));*/
-        //userService.create("aa","111");
+        //userService.create("bb","111");
+        //userDao.findByNameAndPassword("li4","111");
         //Assert.assertEquals(3, userDao.findAll().size());
         // 插入5个用户
       /*  userService.create("a", "111");

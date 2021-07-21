@@ -29,12 +29,26 @@ public class UserDao implements UserService {
 
     public User findByName(String name) {
         final User user = new User();
-        String sql = "SELECT username FROM t_user_1 WHERE name=?";
+        String sql = "SELECT username FROM user WHERE username=?";
         jdbcTemplate.query(sql, new Object[]{name}, new RowCallbackHandler() {
             @Override
             public void processRow(ResultSet resultSet) throws SQLException {
                 //user.setId(resultSet.getString(1));
                 user.setUsername(resultSet.getString(1));
+            }
+        });
+        return user;
+    }
+
+    @Override
+    public User findByNameAndPassword(String username, String password) {
+        final User user = new User();
+        String sql = "SELECT * FROM user WHERE username=? AND password=?";
+        jdbcTemplate.query(sql, new Object[]{username, password}, new RowCallbackHandler() {
+            @Override
+            public void processRow(ResultSet resultSet) throws SQLException {
+                user.setUsername(resultSet.getString(1));
+                user.setPassword(resultSet.getString(2));
             }
         });
         return user;

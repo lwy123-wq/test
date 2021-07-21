@@ -3,18 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <title>登录</title>
-    <script src="${pageContext.request.contextPath}/js/jquery.js"></script>
+    <script type="text/javascript" src="js/jquery.js"></script>
     <script>
         $(function () {
             $("#submit").on('click', function () {
                 $.ajax({
-                    url: "/login",
+                    url: "/loginn",
                     type: 'POST',
                     data: {'username': $("#username").val(), 'password': $("#password").val()},
-                    success: function (data) {
-                        alert(data);
+                    success: function (res) {
+                        if(res=="success"){
+                            alert("success")
+                        }else{
+                            alert("error");
+                        }
+                    },
+                    error: function (res) {
+                        alert("error!!!!!")
                     }
-                });
+                    });
             })
         });
 
@@ -22,9 +29,8 @@
 </head>
 <body>
 <h2>登录</h2>
-<a href="${pageContext.request.contextPath}/registryPage">还没注册？</a>
 用户名<input id="username" type="text"/>
 密码<input id="password" type="password"/>
 <input id="submit" type="submit" value="提交"/>
-</body>>
+</body>
 </html>

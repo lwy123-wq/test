@@ -13,4 +13,4 @@ jpa:
         ddl-auto: update
         dialect: org.hibernate.dialect.MySQL8Dialect
 server:
-  port: 9999
+  port: 9996
