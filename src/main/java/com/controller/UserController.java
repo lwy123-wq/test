@@ -2,7 +2,6 @@ package com.controller;
 
 import com.entity.User;
 import com.service.UserServiceImpl;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;

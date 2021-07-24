@@ -1,4 +1,5 @@
 package chat;
 
-public class ChatClient {
+public class ChatClient{
+
 }

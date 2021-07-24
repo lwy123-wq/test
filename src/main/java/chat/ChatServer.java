@@ -31,7 +31,7 @@ public class ChatServer{
                             ChannelPipeline pipeline = ch.pipeline();
                             pipeline.addLast("encoder", new StringDecoder());
                             pipeline.addLast("decoder", new StringDecoder());
-                            pipeline.addLast(null);
+                            pipeline.addLast(new ChatServerHandler());
                         }
                     });
             ChannelFuture channelFuture = bootstrap.bind(9999).sync();

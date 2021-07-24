@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>聊天</title>
+    <script>
+        var socket;
+        if(window.WebSocket){
+            socket=new WebSocket("ws://localhost:9999/aa");
+            socket.onmessage=function (ev){
+                var rt=document.getElementById("responseTest");
+                rt.value="start............";
+                var userid=document.getElementById("userid").value;
+                //var title = document.getElementById("idd")
+                //title.innerText = userid
+                var myObj={userid:userid};
+                var myJSON=JSON.stringify(myObj);
+                socket.send(myJSON)
+            }
+            //相当于连接关闭(感知到连接关闭)
+            socket.onclose = function (ev) {
+                var rt = document.getElementById("responseText");
+                rt.value = rt.value + "\n" + "连接关闭了.."
+            }
+        } else {
+            alert("当前浏览器不支持websocket")
+        }
+
+        //发送消息到服务器
+        function send(message) {
+            if (!window.socket) { //先判断socket是否创建好
+                return;
+            }
+            if (socket.readyState == WebSocket.OPEN) {
+                //通过socket 发送消息
+                var sendid = document.getElementById("sendid").value;
+                var myObj = {userid: sendid, msg: message};
+                var messageJson = JSON.stringify(myObj);
+                socket.send(messageJson)
+            } else {
+                alert("连接没有开启");
+            }
+        }
+    </script>
+</head>
+<body>
+<h1 th:text="${userid}"></h1>
+<input type="hidden" th:value="${userid}" id="userid">
+<input type="hidden" th:value="${sendid}" id="sendid">
+<form onsubmit="return false">
+    <textarea name="message" style="height: 300px; width: 300px"></textarea>
+    <input type="button" value="发送" onclick="send(this.form.message.value)">
+    <textarea id="responseText" style="height: 300px; width: 300px"></textarea>
+    <input type="button" value="清空内容" onclick="document.getElementById('responseText').value=''">
+</form>
+</body>
+</html>
