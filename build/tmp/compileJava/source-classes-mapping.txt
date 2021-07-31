@@ -10,9 +10,8 @@ chat/ChatServerHandler.java
  chat.ChatServerHandler
 com/service/UserService.java
  com.service.UserService
-chat/ChatServer.java
- chat.ChatServer
- chat.ChatServer$1
+com/controller/UserController.java
+ com.controller.UserController
 chat/config/ChatConfig.java
  chat.config.ChatConfig
 com/service/UserServiceImpl.java
@@ -21,5 +20,8 @@ com/controller/ChatController.java
  com.controller.ChatController
 com/entity/User.java
  com.entity.User
-com/controller/UserController.java
- com.controller.UserController
+chat/Initializer/ChatServerInitializer.java
+ chat.Initializer.ChatServerInitializer
+chat/ChatServer.java
+ chat.ChatServer
+ chat.ChatServer$1

@@ -6,13 +6,13 @@
     <script>
         var socket;
         if(window.WebSocket){
-            socket=new WebSocket("ws://localhost:9999/aa");
+            socket=new WebSocket("ws://localhost:9999/ws");
             socket.onmessage=function (ev){
                 var rt=document.getElementById("responseTest");
                 rt.value="start............";
                 var userid=document.getElementById("userid").value;
-                var title = document.getElementById("idd")
-                title.innerText = userid
+                //var title = document.getElementById("idd")
+                //title.innerText = userid
                 var myObj={userid:userid};
                 var myJSON=JSON.stringify(myObj);
                 socket.send(myJSON)
@@ -33,8 +33,8 @@
             }
             if (socket.readyState == WebSocket.OPEN) {
                 //通过socket 发送消息
-                var sendid = document.getElementById("sendId").value;
-                var myObj = {userId: sendid, msg: message};
+                var sendid = document.getElementById("sendid").value;
+                var myObj = {userid: sendid, msg: message};
                 var messageJson = JSON.stringify(myObj);
                 socket.send(messageJson)
             } else {
@@ -44,9 +44,9 @@
     </script>
 </head>
 <body>
-<h1 id="idd"></h1>
-<input type="hidden"  id="userId">
-<input type="hidden"  id="sendId">
+<h1 th:text="${userid}"></h1>
+<input type="hidden" th:value="${userid}" id="userid">
+<input type="hidden" th:value="${sendid}" id="sendid">
 <form onsubmit="return false">
     <textarea name="message" style="height: 300px; width: 300px"></textarea>
     <input type="button" value="发送" onclick="send(this.form.message.value)">

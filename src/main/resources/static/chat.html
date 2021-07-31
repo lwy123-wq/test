@@ -6,7 +6,7 @@
     <script>
         var socket;
         if(window.WebSocket){
-            socket=new WebSocket("ws://localhost:9999/aa");
+            socket=new WebSocket("ws://localhost:9999/ws");
             socket.onmessage=function (ev){
                 var rt=document.getElementById("responseTest");
                 rt.value="start............";

@@ -1,7 +1,9 @@
 package chat;
 
+import chat.Initializer.ChatServerInitializer;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
+import io.netty.channel.nio.NioEventLoop;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
@@ -13,6 +15,7 @@ import javax.annotation.PreDestroy;
 
 @Component
 public class ChatServer{
+
     private EventLoopGroup boss;
     private EventLoopGroup work;
     private void run() throws InterruptedException {
@@ -31,7 +34,7 @@ public class ChatServer{
                             ChannelPipeline pipeline = ch.pipeline();
                             pipeline.addLast("encoder", new StringDecoder());
                             pipeline.addLast("decoder", new StringDecoder());
-                            pipeline.addLast(new ChatServerHandler());
+                            pipeline.addLast(new ChatServerInitializer());
                         }
                     });
             ChannelFuture channelFuture = bootstrap.bind(9999).sync();
