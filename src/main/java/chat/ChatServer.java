@@ -3,7 +3,6 @@ package chat;
 import chat.Initializer.ChatServerInitializer;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
-import io.netty.channel.nio.NioEventLoop;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
@@ -16,51 +15,65 @@ import javax.annotation.PreDestroy;
 @Component
 public class ChatServer{
 
-    private EventLoopGroup boss;
-    private EventLoopGroup work;
-    private void run() throws InterruptedException {
-        boss=new NioEventLoopGroup();
-        work=new NioEventLoopGroup();
-        try {
-            ServerBootstrap bootstrap = new ServerBootstrap();
-            bootstrap.group(boss, work)
-                    .channel(NioServerSocketChannel.class)
-                    .option(ChannelOption.SO_BACKLOG, 128)
-                    .childOption(ChannelOption.SO_KEEPALIVE, true)
-                    .childHandler(new ChannelInitializer<SocketChannel>() {
+    private EventLoopGroup bossGroup;
+    private EventLoopGroup workGroup;
 
-                        @Override
-                        protected void initChannel(SocketChannel ch) throws Exception {
-                            ChannelPipeline pipeline = ch.pipeline();
-                            pipeline.addLast("encoder", new StringDecoder());
-                            pipeline.addLast("decoder", new StringDecoder());
-                            pipeline.addLast(new ChatServerInitializer());
-                        }
-                    });
-            ChannelFuture channelFuture = bootstrap.bind(9999).sync();
+    private void run() throws Exception {
+        // log.info("开始启动聊天服务器");
+        bossGroup = new NioEventLoopGroup(1);
+        workGroup = new NioEventLoopGroup();
+        try {
+            ServerBootstrap serverBootstrap = new ServerBootstrap();
+            serverBootstrap.group(bossGroup, workGroup)
+                    .channel(NioServerSocketChannel.class)
+                    .childHandler(new ChatServerInitializer());
+            //启动服务器
+            ChannelFuture channelFuture = serverBootstrap.bind(7000).sync();
+            //log.info("开始启动聊天服务器结束");
             channelFuture.channel().closeFuture().sync();
-        }finally {
-            boss.shutdownGracefully();
-            work.shutdownGracefully();
+
+        } finally {
+            bossGroup.shutdownGracefully();
+            workGroup.shutdownGracefully();
         }
+
     }
-    @PostConstruct
-    public void init(){
-        new Thread(()->{
+
+    /**
+     * 初始化服务器
+     */
+    @PostConstruct()
+    public void init() {
+        new Thread(() -> {
             try {
                 run();
-            } catch (InterruptedException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }).start();
     }
+
+
     @PreDestroy
     public void destroy() throws InterruptedException {
-        if(boss!=null){
-            boss.shutdownGracefully().sync();
+        if (bossGroup != null) {
+            bossGroup.shutdownGracefully().sync();
         }
-        if(work!=null){
-            work.shutdownGracefully().sync();
+        if (workGroup != null) {
+            workGroup.shutdownGracefully().sync();
         }
     }
 }
+
+
+//.childHandler(new ChannelInitializer<SocketChannel>() {
+//
+//@Override
+//protected void initChannel(SocketChannel ch) throws Exception {
+//        ChannelPipeline pipeline = ch.pipeline();
+//        pipeline.addLast(new ChatServerInitializer());
+////                            pipeline.addLast("encoder", new StringDecoder());
+////                            pipeline.addLast("decoder", new StringDecoder());
+//
+//        }
+//        });

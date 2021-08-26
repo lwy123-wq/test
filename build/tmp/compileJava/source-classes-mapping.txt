@@ -2,26 +2,23 @@ com/dao/UserDao.java
  com.dao.UserDao
  com.dao.UserDao$1
  com.dao.UserDao$2
-chat/ChatClient.java
- chat.ChatClient
+com/service/UserServiceImpl.java
+ com.service.UserServiceImpl
 com/Application.java
  com.Application
-chat/ChatServerHandler.java
- chat.ChatServerHandler
+com/entity/User.java
+ com.entity.User
 com/service/UserService.java
  com.service.UserService
 com/controller/UserController.java
  com.controller.UserController
-chat/config/ChatConfig.java
- chat.config.ChatConfig
-com/service/UserServiceImpl.java
- com.service.UserServiceImpl
 com/controller/ChatController.java
  com.controller.ChatController
-com/entity/User.java
- com.entity.User
+chat/config/ChatConfig.java
+ chat.config.ChatConfig
+chat/ChatServerHandler.java
+ chat.ChatServerHandler
 chat/Initializer/ChatServerInitializer.java
  chat.Initializer.ChatServerInitializer
 chat/ChatServer.java
  chat.ChatServer
- chat.ChatServer$1

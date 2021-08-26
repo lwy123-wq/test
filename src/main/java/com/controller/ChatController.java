@@ -3,29 +3,32 @@ package com.controller;
 import chat.config.ChatConfig;
 import io.netty.channel.Channel;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
-import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class ChatController {
-    @PostMapping("/chat")
-    public String chat(Model model, @RequestParam("userid") String userid, @RequestParam("sendid") String sendid) {
-        model.addAttribute("userid",userid);
-        model.addAttribute("sendid",sendid);
+
+    @GetMapping("/login11")
+    public String login(Model model, @RequestParam("userId") String userId, @RequestParam("sendId") String sendId) {
+        model.addAttribute("userId", userId);
+        model.addAttribute("sendId", sendId);
         return "chat";
     }
-    @PostMapping("/send")
-    public String chat(@RequestParam("sendid") String sendid) throws InterruptedException {
-        while (true){
-            Channel channel= ChatConfig.concurrentHashMap.get(sendid);
-            if(channel!=null){
+
+    @GetMapping("/sendMsg")
+    public String login(@RequestParam("sendId") String sendId) throws InterruptedException {
+        while (true) {
+            Channel channel = ChatConfig.concurrentHashMap.get(sendId);
+            if (channel != null) {
                 channel.writeAndFlush(new TextWebSocketFrame("test"));
                 Thread.sleep(1000);
             }
-
         }
+
     }
 
 }
+

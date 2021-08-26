@@ -2,23 +2,33 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>聊天</title>
+    <title>Title</title>
     <script>
         var socket;
-        if(window.WebSocket){
-            socket=new WebSocket("ws://localhost:9999/ws");
-            socket.onmessage=function (ev){
-                var rt=document.getElementById("responseTest");
-                rt.value="start............";
-                var userid=document.getElementById("userid").value;
-                //var title = document.getElementById("idd")
-                //title.innerText = userid
-                var myObj={userid:userid};
-                var myJSON=JSON.stringify(myObj);
+        //判断当前浏览器是否支持websocket
+        if (window.WebSocket) {
+            //go on
+            socket = new WebSocket("ws://localhost:7000/ws");
+            //相当于channelReado, ev 收到服务器端回送的消息
+            socket.onmessage = function (ev) {
+                var rt = document.getElementById("responseText");
+                rt.value = rt.value + "\n" + ev.data;
+            }
+
+            //相当于连接开启(感知到连接开启)
+            socket.onopen = function (ev) {
+                alert("xxxxxxxx")
+                var rt = document.getElementById("responseText");
+                rt.value = "连接开启了.."
+                var userId = document.getElementById("userId").value;
+                var myObj = {userId: userId};
+                var myJSON = JSON.stringify(myObj);
                 socket.send(myJSON)
             }
+
             //相当于连接关闭(感知到连接关闭)
             socket.onclose = function (ev) {
+                alert(ev)
                 var rt = document.getElementById("responseText");
                 rt.value = rt.value + "\n" + "连接关闭了.."
             }
@@ -33,8 +43,8 @@
             }
             if (socket.readyState == WebSocket.OPEN) {
                 //通过socket 发送消息
-                var sendid = document.getElementById("sendid").value;
-                var myObj = {userid: sendid, msg: message};
+                var sendId = document.getElementById("sendId").value;
+                var myObj = {userId: sendId, msg: message};
                 var messageJson = JSON.stringify(myObj);
                 socket.send(messageJson)
             } else {
@@ -44,9 +54,9 @@
     </script>
 </head>
 <body>
-<h1 th:text="${userid}"></h1>
-<input type="hidden" th:value="${userid}" id="userid">
-<input type="hidden" th:value="${sendid}" id="sendid">
+<h1 th:text="${userId}"></h1>
+<input type="hidden" th:value="${userId}" id="userId">
+<input type="hidden" th:value="${sendId}" id="sendId">
 <form onsubmit="return false">
     <textarea name="message" style="height: 300px; width: 300px"></textarea>
     <input type="button" value="发送" onclick="send(this.form.message.value)">
