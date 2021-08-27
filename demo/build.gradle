@@ -18,7 +18,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     //springframework
-   // implementation group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '2.4.3'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '2.4.3'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.5.2'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter', version: '2.5.2'
 }
